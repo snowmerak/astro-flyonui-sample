@@ -1,0 +1,45 @@
+---
+interface Props {
+  direction?: 'vertical' | 'horizontal',
+  lineStyle?: 'default' | 'dotted' | 'dashed',
+  contentPosition?: 'center' | 'start' | 'end',
+  color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
+}
+
+let {
+  direction = 'vertical',
+  lineStyle = 'default',
+  contentPosition = 'center',
+  color = undefined
+} = Astro.props;
+
+let divClass = "divider";
+
+if (color) {
+  divClass = `divider divider-${color}`;
+}
+
+if (direction === 'horizontal') {
+  divClass += " divider-horizontal";
+}
+
+switch (lineStyle) {
+  case 'dotted':
+    divClass += " divider-dotted";
+    break;
+  case 'dashed':
+    divClass += " divider-dashed";
+    break;
+}
+
+switch (contentPosition) {
+  case 'start':
+    divClass += " divider-start";
+    break;
+  case 'end':
+    divClass += " divider-end";
+    break;
+}
+---
+
+<div class={divClass}><slot/></div>

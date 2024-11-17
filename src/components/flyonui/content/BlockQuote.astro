@@ -1,0 +1,65 @@
+---
+interface Props {
+    align?: 'default'|'center'|'right'
+    source?: string,
+    avatar?: string,
+    sourceTitle?: string
+}
+
+const {
+    align = 'default',
+    source = undefined,
+    avatar = undefined,
+    sourceTitle = undefined
+} = Astro.props;
+
+let blockquoteClass = "relative p-4";
+switch (align) {
+    case 'right':
+        blockquoteClass = "relative ms-auto p-4 text-end";
+        break;
+    case 'center':
+        blockquoteClass = "relative mx-auto p-4 text-center";
+        break;
+}
+
+let spanClass = "icon-[tabler--quote] text-base-300/80 absolute -start-3 -top-3 size-16 rotate-180 rtl:rotate-0";
+switch (align) {
+    case 'right':
+        spanClass = "icon-[tabler--quote] text-base-300/80 absolute -top-3 start-6 size-16 rotate-180 rtl:rotate-0";
+        break;
+    case 'center':
+        spanClass = "icon-[tabler--quote] text-base-300/80 absolute -top-3 start-2 size-16 rotate-180 rtl:rotate-0";
+        break;
+}
+---
+
+<blockquote class={blockquoteClass}>
+    <span class={spanClass}></span>
+
+    <div class="relative z-[1]">
+        <p class="text-base-content/90 text-lg">
+            <em>
+              <slot/>
+            </em>
+        </p>
+    </div>
+
+    {source && (
+      <>
+      {avatar && (
+        <div class="avatar">
+            <div class="size-10 rounded-full">
+                <img src={avatar} alt="avatar" />
+            </div>
+        </div>
+      )}
+      <footer class="mt-4">
+          <div class="text-base-content/50 text-base font-semibold">{source}</div>
+          {sourceTitle && (
+            <div class="text-base-content/50 text-xs">{sourceTitle}</div>
+          )}
+      </footer>
+      </>
+    )}
+</blockquote>

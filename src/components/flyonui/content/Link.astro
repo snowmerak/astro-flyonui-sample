@@ -1,0 +1,30 @@
+---
+interface Props {
+  href: string
+  variant?: 'default' | 'hover' | 'animated'
+  color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
+}
+
+let {
+  href = "#",
+  variant = 'default',
+  color = undefined
+} = Astro.props;
+
+let linkClass = "link";
+
+switch (variant) {
+  case 'hover':
+    linkClass += " link-hover";
+    break;
+  case 'animated':
+    linkClass += " link-animated";
+    break;
+}
+
+if (color) {
+  linkClass += ` link-${color}`;
+}
+---
+
+<a href={href} class={linkClass}><slot/></a>

@@ -1,0 +1,48 @@
+---
+interface Props {
+  direction?: 'vertical' | 'horizontal'
+  minHeight?: string
+  maxHeight?: string
+  height?: string
+  minWidth?: string
+  maxWidth?: string
+  width?: string
+}
+
+let {
+  direction = 'vertical',
+  minHeight = undefined,
+  maxHeight = undefined,
+  height = undefined,
+  minWidth = undefined,
+  maxWidth = undefined,
+  width = undefined
+} = Astro.props;
+
+if (height) {
+  minHeight = height;
+  maxHeight = height;
+}
+
+if (width) {
+  minWidth = width;
+  maxWidth = width;
+}
+
+let divClass = "vertical-scrollbar shadow w-full p-4";
+if (direction === 'horizontal') {
+  divClass = "horizontal-scrollbar shadow flex flex-row space-x-3 p-4";
+}
+if (direction === 'vertical' && !minHeight && !maxHeight) {
+  divClass = "vertical-scrollbar shadow max-h-56 w-full p-4";
+}
+---
+
+<div class={divClass} style={{
+  minHeight: minHeight,
+  maxHeight: maxHeight,
+  minWidth: minWidth,
+  maxWidth: maxWidth
+}}>
+    <slot/>
+</div>

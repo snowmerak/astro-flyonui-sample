@@ -1,0 +1,53 @@
+---
+interface Props {
+  listKind?: 'ordered' | 'unordered'
+  listStyle?: 'inside' | 'outside'
+  listImage?: string
+  items: any[]
+}
+
+let {
+  listKind = 'unordered',
+  listStyle = 'inside',
+  listImage = undefined,
+  items = []
+} = Astro.props;
+
+let listClass = "";
+
+switch (listStyle) {
+  case 'inside':
+    listClass = "list-inside";
+    break;
+  case 'outside':
+    listClass = "list-outside";
+    break;
+}
+
+switch (listKind) {
+  case 'ordered':
+    listClass += " list-decimal";
+    break;
+  case 'unordered':
+    listClass += " list-disc";
+    break;
+}
+
+if (listImage) {
+  listClass += ` list-image-[${listImage}]`;
+}
+---
+
+{listKind === 'ordered' ? (
+<ol class={listClass}>
+  {items.map((item) => (
+    <li class="mb-2">{item}</li>
+  ))}
+</ol>
+) : (
+<ul class={listClass}>
+  {items.map((item) => (
+    <li class="mb-2">{item}</li>
+  ))}
+</ul>
+)}
